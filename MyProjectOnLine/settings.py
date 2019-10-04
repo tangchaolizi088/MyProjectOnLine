@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'organization',
     'operation',
     'xadmin',
-    'crispy_forms'
+    'crispy_forms',
+    'captcha'
 ]
 
 AUTH_USER_MODEL = 'users.UserProfile'
@@ -91,7 +92,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'mxonline',  # 数据库名字
         'USER': 'root',  # 账号
-        'PASSWORD': '',  # 密码
+        'PASSWORD': '123456',  # 密码
         'HOST': '127.0.0.1',  # IP
         'PORT': '3306',  # 端口
     }
@@ -132,3 +133,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+AUTHENTICATION_BACKENDS = (
+    'users.views.CustomBackend',
+)
+
+
+EMAIL_HOST = "smtp.qq.com"  # SMTP服务器主机
+EMAIL_PORT = 25             # 端口
+EMAIL_HOST_USER = "348759948@qq.com"       # 邮箱地址
+EMAIL_HOST_PASSWORD = "fxjdysvsftaabgfg"    # 密码
+EMAIL_USE_TLS= True
+EMAIL_FROM = "348759948@qq.com"            # 邮箱地址
