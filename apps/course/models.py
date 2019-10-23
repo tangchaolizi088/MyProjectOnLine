@@ -1,11 +1,12 @@
 from django.db import models
 from datetime import datetime
 # Create your models here.
+from organization.models import CourseOrg
 
 
 class Course(models.Model):
     DEGREE_CHOICES = (('cj', '初级'), ('zj', '中级'), ('gj', '高级'))
-    name = models.CharField('课程名',max_length=100)
+    name = models.CharField('课程名', max_length=100)
     desc = models.CharField('课程描述', max_length=500)
     detail = models.TextField('课程详情')
     degree = models.CharField('难度', choices=DEGREE_CHOICES, max_length=2)
@@ -15,6 +16,7 @@ class Course(models.Model):
     image = models.ImageField("封面图", upload_to="courses/%Y/%m", max_length=100)
     click_nums = models.IntegerField("点击数", default=0)
     add_time = models.DateTimeField("添加时间", default=datetime.now())
+    course_org = models.ForeignKey(CourseOrg, on_delete=models.CASCADE, verbose_name="所属机构", null=True, blank=True)
 
     class Meta:
         verbose_name = "课程"
@@ -38,8 +40,8 @@ class Lesson(models.Model):
 
 
 class Video(models.Model):
-    lesson = models.ForeignKey(Lesson, verbose_name="章节",on_delete=models.CASCADE)
-    name = models.CharField("视频名",max_length=100)
+    lesson = models.ForeignKey(Lesson, verbose_name="章节", on_delete=models.CASCADE)
+    name = models.CharField("视频名", max_length=100)
     add_time = models.DateTimeField("添加时间", default=datetime.now())
 
     class Meta:
@@ -48,12 +50,11 @@ class Video(models.Model):
 
 
 class CourseResource(models.Model):
-    course = models.ForeignKey(Course, verbose_name="课程",on_delete=models.CASCADE)
-    name = models.CharField("名称",max_length=100)
-    download = models.FileField("资源文件",upload_to="course/resource/%Y/%m",max_length=100)
+    course = models.ForeignKey(Course, verbose_name="课程", on_delete=models.CASCADE)
+    name = models.CharField("名称", max_length=100)
+    download = models.FileField("资源文件", upload_to="course/resource/%Y/%m", max_length=100)
     add_time = models.DateTimeField("添加时间", default=datetime.now())
 
     class Meta:
         verbose_name = "课程资源"
         verbose_name_plural = verbose_name
-

@@ -16,7 +16,7 @@ import sys
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
-sys.path.insert(0,os.path.join(BASE_DIR, 'extra_apps'))
+sys.path.insert(0, os.path.join(BASE_DIR, 'extra_apps'))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'operation',
     'xadmin',
     'crispy_forms',
-    'captcha'
+    'captcha',
+    'pure_pagination',
 ]
 
 AUTH_USER_MODEL = 'users.UserProfile'
@@ -73,6 +74,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
             ],
         },
     },
@@ -140,10 +142,12 @@ AUTHENTICATION_BACKENDS = (
     'users.views.CustomBackend',
 )
 
-
 EMAIL_HOST = "smtp.qq.com"  # SMTP服务器主机
-EMAIL_PORT = 25             # 端口
-EMAIL_HOST_USER = "348759948@qq.com"       # 邮箱地址
-EMAIL_HOST_PASSWORD = "fxjdysvsftaabgfg"    # 密码
-EMAIL_USE_TLS= True
-EMAIL_FROM = "348759948@qq.com"            # 邮箱地址
+EMAIL_PORT = 25  # 端口
+EMAIL_HOST_USER = "348759948@qq.com"  # 邮箱地址
+EMAIL_HOST_PASSWORD = "fxjdysvsftaabgfg"  # 密码
+EMAIL_USE_TLS = True
+EMAIL_FROM = "348759948@qq.com"  # 邮箱地址
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

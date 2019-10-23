@@ -17,8 +17,11 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 
 from django.views.generic import TemplateView
-from users.views import RegisterView, LoginView, ActiveUserView
+from django.views.static import serve
 
+from organization.views import OrgView
+from users.views import RegisterView, LoginView, ActiveUserView, LogoutView, ForgetPwdView, ResetView, ModifyPwdView
+from MyProjectOnLine.settings import MEDIA_ROOT
 import xadmin
 
 urlpatterns = [
@@ -27,7 +30,14 @@ urlpatterns = [
     path('login/', LoginView.as_view(), name='login'),
     path('register/', RegisterView.as_view(), name='register'),
     path('captcha/', include('captcha.urls')),
+    path('logout/', LogoutView.as_view(), name='logout'),
     re_path('active/(?P<active_code>.*)/', ActiveUserView.as_view(), name='user_active'),
-    # path('forget/', ForgetPwdView.as_view(), name='forget_pwd')
+    path('forget/', ForgetPwdView.as_view(), name='forget_pwd'),
+    re_path('reset/(?P<active_code>.*)/', ResetView.as_view(), name='reset_pwd'),
+    path('modify_pwd/', ModifyPwdView.as_view(), name='modify_pwd'),
+    # 课程机构配置
+    # path('org/', include('organization.urls',namespace='org')),
+    path('org/', include('organization.urls',namespace='org')),
+    re_path(r'^media/(?P<path>.*)', serve, {"document_root": MEDIA_ROOT})
 
 ]
